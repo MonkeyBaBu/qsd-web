@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Cache-Control" content="no-store">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap" rel="stylesheet">
+<title>ลงนามแสดงความอาลัย</title>
+<style>
+  html,body{height:100%;margin:0}
+  body{
+    font-family:"Charm",serif;color:#fff;text-align:center;padding:24px;
+    background:
+      linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.3)),
+      url(https://cdn.jsdelivr.net/gh/MonkeyBaBu/qsd-assets@main/QSD_BG.png) top left/25% auto repeat fixed;
+    display:flex;flex-direction:column;min-height:100vh;
+  }
+  .page{flex:1;display:flex;align-items:center;justify-content:center}
+  .wrap{max-width:780px;width:100%;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);border-radius:18px;padding:28px}
+  .header{margin-top:calc(100px - 10vh);margin-bottom:24px}
+  .header img{width:30vw;max-width:300px;height:auto;display:block;margin:0 auto}
+  h1{font-size:32px;line-height:1.6;margin:10px 0 6px}
+  p{margin:4px 0;font-size:18px;line-height:1.8}
+  .line{margin:24px auto}
+  .line img{width:30vw;max-width:300px;height:auto}
+
+  form{margin-top:14px;text-align:center;width:min(520px,90%);margin-left:auto;margin-right:auto}
+  .field{margin:10px 0;text-align:left}
+  label{display:block;font-size:16px;margin-bottom:6px}
+  input[type="text"]{width:100%;padding:12px 14px;font-size:18px;border:0;border-radius:12px;box-sizing:border-box;font-family:"Charm",serif}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden} /* honeypot */
+  .btn{display:block;width:100%;padding:14px;font-size:18px;border:0;border-radius:12px;background:#fff;color:#111;cursor:pointer;font-family:"Charm",serif;margin-top:14px}
+
+  .site-footer{margin-top:60px;text-align:center;padding:30px 0 20px}
+  .site-footer img{width:10vw;max-width:200px;height:auto;filter:brightness(.98)}
+
+  @media (max-width:768px){
+    body{padding:12px}
+    .wrap{width:95%;padding:20px 14px;border-radius:12px}
+    .header img,.line img{width:60%;max-width:240px}
+    h1{font-size:22px} p{font-size:16px}
+    input[type="text"],.btn{font-size:16px;padding:10px 12px}
+    .site-footer img{width:40vw;max-width:160px}
+  }
+</style>
+</head>
+<body>
+  <main class="page">
+    <div class="wrap">
+      <div class="header"><img src="https://cdn.jsdelivr.net/gh/MonkeyBaBu/qsd-assets@main/QSD_Header_001.png" alt=""></div>
+
+      <h1>น้อมเกล้าน้อมกระหม่อมส่งเสด็จสู่สรรคาลัย</h1>
+      <p>ด้วยสำนึกในพระมหากรุณาธิคุณ</p>
+      <p>อันหาที่สุดมิได้ ตราบนิจนิรันดร์</p>
+
+      <div class="line"><img src="https://cdn.jsdelivr.net/gh/MonkeyBaBu/qsd-assets@main/QSD_lineBreak_002.png" alt=""></div>
+
+      <form id="f" autocomplete="off" novalidate>
+        <div class="field">
+          <label for="fname">ชื่อ</label>
+          <input id="fname" name="fname" type="text" required>
+        </div>
+        <div class="field">
+          <label for="lname">นามสกุล</label>
+          <input id="lname" name="lname" type="text" required>
+        </div>
+        <!-- honeypot -->
+        <div class="hp" aria-hidden="true">
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button class="btn" type="submit">ร่วมลงนามแสดงความอาลัย</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <img src="https://cdn.jsdelivr.net/gh/MonkeyBaBu/qsd-assets@main/tat_amazing_white_02.png" alt="TAT / Amazing Thailand">
+  </footer>
+
+<script>
+const EXEC_URL = 'PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE';  // ใส่ /exec ของ Apps Script
+
+// ส่งแบบ form-urlencoded เพื่อหลบ preflight และให้ทำงานเร็ว
+document.getElementById('f').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const btn=e.target.querySelector('button'); btn.disabled=true;
+  const body=new URLSearchParams(new FormData(e.target));
+  try{
+    await fetch(EXEC_URL,{method:'POST',body}); // อย่าตั้ง headers เอง
+    const q = new URLSearchParams({
+      fname: e.target.fname.value.trim(),
+      lname: e.target.lname.value.trim()
+    });
+    location.href = 'thankyou.html?' + q.toString();   // ง่ายและรวดเร็ว
+  }catch(_){
+    alert('ส่งไม่สำเร็จ กรุณาลองใหม่');
+    btn.disabled=false;
+  }
+});
+</script>
+</body>
+</html>
