@@ -28,11 +28,11 @@
   .line{margin:24px auto}
   .line img{width:30vw;max-width:300px;height:auto}
 
-  form{margin-top:14px;text-align:center;width:min(520px,90%);margin-left:auto;margin-right:auto}
+  form{margin-top:14px;text-align:center;width:min(520px,90%);margin-inline:auto}
   .field{margin:10px 0;text-align:left}
   label{display:block;font-size:16px;margin-bottom:6px}
   input[type="text"]{width:100%;padding:12px 14px;font-size:18px;border:0;border-radius:12px;box-sizing:border-box;font-family:"Charm",serif}
-  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden} /* honeypot */
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
   .btn{display:block;width:100%;padding:14px;font-size:18px;border:0;border-radius:12px;background:#fff;color:#111;cursor:pointer;font-family:"Charm",serif;margin-top:14px}
 
   .site-footer{margin-top:60px;text-align:center;padding:30px 0 20px}
@@ -51,14 +51,19 @@
 <body>
   <main class="page">
     <div class="wrap">
-      <div class="header"><img src="https://cdn.jsdelivr.net/gh/MonkeyBaBu/qsd-assets@main/QSD_Header_001.png" alt=""></div>
+      <div class="header">
+        <img src="https://cdn.jsdelivr.net/gh/MonkeyBaBu/qsd-assets@main/QSD_Header_001.png" alt="">
+      </div>
 
       <h1>เสด็จสู่สวรรคาลัย</h1>
       <h1>ผองพสกนิกรชาวไทยน้อมรำลึกในพระมหากรุณาธิคุณตราบนิจนิรันดร์</h1>
 
-      <div class="line"><img src="https://cdn.jsdelivr.net/gh/MonkeyBaBu/qsd-assets@main/QSD_lineBreak_002.png" alt=""></div>
+      <div class="line">
+        <img src="https://cdn.jsdelivr.net/gh/MonkeyBaBu/qsd-assets@main/QSD_lineBreak_002.png" alt="">
+      </div>
 
-      <form id="f" autocomplete="off" novalidate>
+      <!-- ส่งตรงไป Apps Script; server จะ redirect ไป thankyou.html?token=... -->
+      <form method="post" action="PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE" autocomplete="off" novalidate>
         <div class="field">
           <label for="fname">ชื่อ</label>
           <input id="fname" name="fname" type="text" required>
@@ -81,27 +86,5 @@
   <footer class="site-footer">
     <img src="https://cdn.jsdelivr.net/gh/MonkeyBaBu/qsd-assets@main/tat_amazing_white_02.png" alt="TAT / Amazing Thailand">
   </footer>
-
-<script>
-const EXEC_URL = 'PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE';  // ใส่ /exec ของ Apps Script
-
-// ส่งแบบ form-urlencoded เพื่อหลบ preflight และให้ทำงานเร็ว
-document.getElementById('f').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const btn=e.target.querySelector('button'); btn.disabled=true;
-  const body=new URLSearchParams(new FormData(e.target));
-  try{
-    await fetch(EXEC_URL,{method:'POST',body}); // อย่าตั้ง headers เอง
-    const q = new URLSearchParams({
-      fname: e.target.fname.value.trim(),
-      lname: e.target.lname.value.trim()
-    });
-    location.href = 'thankyou.html?' + q.toString();   // ง่ายและรวดเร็ว
-  }catch(_){
-    alert('ส่งไม่สำเร็จ กรุณาลองใหม่');
-    btn.disabled=false;
-  }
-});
-</script>
 </body>
 </html>
